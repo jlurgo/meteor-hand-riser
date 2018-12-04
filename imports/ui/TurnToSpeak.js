@@ -10,11 +10,16 @@ export default class TurnToSpeak extends Component {
   }
 
   render() {
+    let user_id = -1
+    if(Meteor.user()) user_id = Meteor.user()._id;
     return (
       <li className="turn_to_speak">
-        <button className="delete" onClick={this.deleteThisTurn.bind(this)}>
-          &times;
-        </button>
+        {
+          user_id == this.props.turn.owner ?
+            <button className="delete" onClick={this.deleteThisTurn.bind(this)}>
+              &times;
+            </button>: ''
+        }
         <span className="text">
           <strong>{this.props.turn.username}</strong>
         </span>
