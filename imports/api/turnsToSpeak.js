@@ -19,10 +19,12 @@ Meteor.methods({
       throw new Meteor.Error('not-authorized');
     }
 
+    let usrName = Meteor.users.findOne(this.userId).username;
+    if(!usrName) usrName = Meteor.users.findOne(this.userId).profile.name;
     TurnsToSpeak.insert({
       createdAt: new Date(),
       owner: this.userId,
-      username: Meteor.users.findOne(this.userId).username,
+      username: usrName,
     });
   },
 

@@ -49,18 +49,22 @@ form {
   position: relative;
 }
 
-.new-task input {
+.new-turn input {
   box-sizing: border-box;
   padding: 10px 0;
   background: transparent;
-  border: none;
+  border: 1px solid black;
   width: 100%;
   padding-right: 80px;
   font-size: 1em;
+  cursor: pointer;
 }
 
-.new-task input:focus{
-  outline: 0;
+.new-turn input:hover{
+  background-color: rgba(0, 0, 0, 0.1);
+  -webkit-transition: background-color 100ms linear;
+  -ms-transition: background-color 100ms linear;
+  transition: background-color 100ms linear;
 }
 
 ul {
@@ -76,6 +80,7 @@ ul {
   font-size: 1em;
   border: none;
   position: relative;
+  cursor: pointer;
 }
 
 li {
