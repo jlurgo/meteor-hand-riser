@@ -39,10 +39,12 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container container-fluid">
         <header>
-          <h1>Speakers Queue ({this.props.turnsCount})</h1>
-          <AccountsUIWrapper />
+          <div className= "row">
+            <h1 className="col">Speakers Queue ({this.props.turnsCount})</h1>
+            <AccountsUIWrapper />
+          </div>
           { (this.props.currentUser && this.props.userDidntRiseHand) ?
             <form className="new-turn" onSubmit={this.handleSubmit.bind(this)} >
               <input
@@ -52,6 +54,7 @@ class App extends Component {
               />
             </form> : ''
           }
+
           { this.props.loggedUserIsAdmin ?
             <Select
               className = "select_users"
@@ -100,7 +103,7 @@ export default withTracker(() => {
     user_id = Meteor.user()._id;
     user_is_admin = Admins.findOne({userId: Meteor.user()._id})? true : false;
   }
-  
+
   return {
     turnsToSpeak: TurnsToSpeak.find({}, { sort: { createdAt: 1 } }).fetch(),
     turnsCount: TurnsToSpeak.find({}).count(),
