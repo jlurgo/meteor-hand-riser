@@ -7,6 +7,8 @@ import { TurnsToSpeak, Admins } from '../api/turnsToSpeak.js';
 import TurnToSpeak from './TurnToSpeak.js';
 import AccountsUIWrapper from './AccountsUIWrapper.js';
 
+import Select from 'react-select';
+
 // App component - represents the whole app
 class App extends Component {
   constructor(props) {
@@ -15,7 +17,7 @@ class App extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    Meteor.call('turns_to_speak.insert');
+    Meteor.call('turns_to_speak.insert', this.props.currentUser._id);
   }
 
   renderTurns() {
@@ -39,11 +41,33 @@ class App extends Component {
           { (this.props.currentUser && this.props.userDidntRiseHand) ?
             <form className="new-turn" onSubmit={this.handleSubmit.bind(this)} >
               <input
-                type="submit"
-                ref="rise_hand_btn"
-                value="rise your hand"
+                type = "submit"
+                ref = "rise_hand_btn"
+                value = "rise your hand"
               />
             </form> : ''
+          }
+          { this.props.userIsAdmin ?
+            <Select
+              className = "select_users"
+              options = {
+                Meteor.users.find({
+                  _id: {
+                      $nin: this.props.turnsToSpeak.map((turn) => {return turn.owner;})
+                  }
+                })
+                .fetch()
+                .map((usr)=>{
+                  return {
+                    value: usr._id,
+                    label: usr.username ? usr.username : usr.profile.name
+                  }
+                })
+              }
+              onChange = {(selectedOption) => {
+                Meteor.call('turns_to_speak.insert', selectedOption.value);
+              }}
+            />: ''
           }
         </header>
 
@@ -58,6 +82,8 @@ class App extends Component {
 export default withTracker(() => {
   Meteor.subscribe('turns_to_speak');
   Meteor.subscribe('admins');
+  Meteor.subscribe('user_list');
+
   let user_id = -1
   let user_is_admin = false;
   if(Meteor.user()) {

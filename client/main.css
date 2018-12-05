@@ -115,6 +115,10 @@ header .hide-completed {
   margin-left: 5px;
 }
 
+.select_users{
+  margin-top: 16px;
+}
+
 @media (max-width: 600px) {
   li {
     padding: 12px 15px;
