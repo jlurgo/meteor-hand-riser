@@ -22,11 +22,16 @@ class App extends Component {
 
   renderTurns() {
     return this.props.turnsToSpeak.map((turn) => {
+      let picture = '';
+      let usr = Meteor.users.findOne({_id: turn.owner});
+      if(usr.services.google)
+        picture = usr.services.google.picture;
       return (
         <TurnToSpeak
           key={turn._id}
           turn={turn}
-          userIsAdmin={this.props.userIsAdmin}
+          loggedUserIsAdmin={this.props.loggedUserIsAdmin}
+          userPicture={picture}
         />
       );
     });
@@ -47,9 +52,10 @@ class App extends Component {
               />
             </form> : ''
           }
-          { this.props.userIsAdmin ?
+          { this.props.loggedUserIsAdmin ?
             <Select
               className = "select_users"
+              placeholder = "select an user to add him to the queue"
               options = {
                 Meteor.users.find({
                   _id: {
@@ -58,9 +64,13 @@ class App extends Component {
                 })
                 .fetch()
                 .map((usr)=>{
+                  const usrName = usr.username ? usr.username : usr.profile.name;
+                  let label = usrName;
+                  if(usr.services.google)
+                    label = <span className = "user_in_select"> <img src= {usr.services.google.picture}/> <label> {usrName} </label> </span>
                   return {
                     value: usr._id,
-                    label: usr.username ? usr.username : usr.profile.name
+                    label: label
                   }
                 })
               }
@@ -90,13 +100,12 @@ export default withTracker(() => {
     user_id = Meteor.user()._id;
     user_is_admin = Admins.findOne({userId: Meteor.user()._id})? true : false;
   }
-  console.warn(user_id, user_is_admin);
-  console.warn(Admins.find({userId: user_id}).fetch());
+  
   return {
     turnsToSpeak: TurnsToSpeak.find({}, { sort: { createdAt: 1 } }).fetch(),
     turnsCount: TurnsToSpeak.find({}).count(),
     userDidntRiseHand: TurnsToSpeak.find({owner: user_id}).count()==0,
     currentUser: Meteor.user(),
-    userIsAdmin: user_is_admin
+    loggedUserIsAdmin: user_is_admin
   };
 })(App);
