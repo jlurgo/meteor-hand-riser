@@ -59,6 +59,7 @@ class App extends Component {
             <Select
               className = "select_users"
               placeholder = "select an user to add him to the queue"
+              value = {null}
               options = {
                 Meteor.users.find({
                   _id: {
