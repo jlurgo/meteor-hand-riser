@@ -21,3 +21,4 @@ react-meteor-data
 accounts-ui
 accounts-google
 google-config-ui
+accounts-password

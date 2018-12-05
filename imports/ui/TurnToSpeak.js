@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TurnsToSpeak } from '../api/turnsToSpeak.js';
+import { TurnsToSpeak, Admins } from '../api/turnsToSpeak.js';
 import { Meteor } from 'meteor/meteor';
 import classnames from 'classnames';
 
@@ -10,12 +10,12 @@ export default class TurnToSpeak extends Component {
   }
 
   render() {
-    let user_id = -1
-    if(Meteor.user()) user_id = Meteor.user()._id;
+    let user_id = Meteor.user() ? Meteor.user()._id : -1;
+
     return (
       <li className="turn_to_speak">
         {
-          user_id == this.props.turn.owner ?
+          ((user_id == this.props.turn.owner) || this.props.userIsAdmin ) ?
             <button className="delete" onClick={this.deleteThisTurn.bind(this)}>
               &times;
             </button>: ''

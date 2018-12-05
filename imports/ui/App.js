@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import ReactDOM from 'react-dom';
 
-import { TurnsToSpeak } from '../api/turnsToSpeak.js';
+import { TurnsToSpeak, Admins } from '../api/turnsToSpeak.js';
 
 import TurnToSpeak from './TurnToSpeak.js';
 import AccountsUIWrapper from './AccountsUIWrapper.js';
@@ -24,6 +24,7 @@ class App extends Component {
         <TurnToSpeak
           key={turn._id}
           turn={turn}
+          userIsAdmin={this.props.userIsAdmin}
         />
       );
     });
@@ -56,12 +57,20 @@ class App extends Component {
 
 export default withTracker(() => {
   Meteor.subscribe('turns_to_speak');
+  Meteor.subscribe('admins');
   let user_id = -1
-  if(Meteor.user()) user_id = Meteor.user()._id;
+  let user_is_admin = false;
+  if(Meteor.user()) {
+    user_id = Meteor.user()._id;
+    user_is_admin = Admins.findOne({userId: Meteor.user()._id})? true : false;
+  }
+  console.warn(user_id, user_is_admin);
+  console.warn(Admins.find({userId: user_id}).fetch());
   return {
     turnsToSpeak: TurnsToSpeak.find({}, { sort: { createdAt: 1 } }).fetch(),
     turnsCount: TurnsToSpeak.find({}).count(),
     userDidntRiseHand: TurnsToSpeak.find({owner: user_id}).count()==0,
     currentUser: Meteor.user(),
+    userIsAdmin: user_is_admin
   };
 })(App);

@@ -6,6 +6,7 @@ Meteor.startup(() => {
 });
 
 Accounts.validateNewUser(function(user){
+  if(!user.services.google) return true;
   if(user.services.google.email.match(/creativa77\.com\.ar$/)) {
       return true;
   }
