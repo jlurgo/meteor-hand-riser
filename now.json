@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "name": "hand-raiser",
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
