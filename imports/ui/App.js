@@ -85,7 +85,7 @@ class App extends Component {
           }
         </header>
 
-        <ul>
+        <ul className="list-group list-group-flush">
           {this.renderTurns()}
         </ul>
       </div>

@@ -56,39 +56,11 @@ ul {
   float: right;
   font-weight: bold;
   background: none;
-  font-size: 1em;
+  font-size: 2em;
   border: none;
-  position: relative;
-  cursor: pointer;
-}
-
-li {
-  position: relative;
-  list-style: none;
-  padding: 15px;
-  border-bottom: #eee solid 1px;
-}
-
-li strong {
   position: absolute;
-  top: 40%;
-}
-
-li .text {
-  margin-left: 10px;
-}
-
-li.checked {
-  color: #888;
-}
-
-li.checked .text {
-  text-decoration: line-through;
-}
-
-li.private {
-  background: #eee;
-  border-color: #ddd;
+  right: 10px;
+  cursor: pointer;
 }
 
 li img{
@@ -98,6 +70,10 @@ li img{
 
 header .hide-completed {
   float: right;
+}
+
+li .text{
+    margin-left: 10px;
 }
 
 .toggle-private {
@@ -121,23 +97,8 @@ header .hide-completed {
 
 .user_in_select label{
   position: absolute;
-  top: -8px;
-  left: 50px;
+  top: 0px;
+  left: 40px;
   font-size: 14px;
   width: 200px;
-}
-
-@media (max-width: 600px) {
-  li {
-    padding: 12px 15px;
-  }
-
-  .search {
-    width: 150px;
-    clear: both;
-  }
-
-  .new-task input {
-    padding-bottom: 5px;
-  }
 }

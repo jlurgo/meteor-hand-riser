@@ -13,7 +13,7 @@ export default class TurnToSpeak extends Component {
     let user_id = Meteor.user() ? Meteor.user()._id : -1;
 
     return (
-      <li className="turn_to_speak">
+      <li className="turn_to_speak list-group-item d-flex align-items-center">
         <img src= {this.props.userPicture} />
         <span className="text">
           <strong>{this.props.turn.username}</strong>
