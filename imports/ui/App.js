@@ -104,10 +104,10 @@ export default withTracker(() => {
     user_id = Meteor.user()._id;
     user_is_admin = Admins.findOne({userId: Meteor.user()._id})? true : false;
   }
-
+  let turns = TurnsToSpeak.find({}, { sort: { createdAt: 1 } });
   return {
-    turnsToSpeak: TurnsToSpeak.find({}, { sort: { createdAt: 1 } }).fetch(),
-    turnsCount: TurnsToSpeak.find({}).count(),
+    turnsToSpeak: turns.fetch(),
+    turnsCount: turns.count(),
     userDidntRiseHand: TurnsToSpeak.find({owner: user_id}).count()==0,
     currentUser: Meteor.user(),
     loggedUserIsAdmin: user_is_admin

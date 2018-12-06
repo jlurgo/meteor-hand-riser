@@ -46,10 +46,8 @@ form {
   transition: background-color 100ms linear;
 }
 
-ul {
-  margin: 0;
-  padding: 0;
-  background: white;
+.list-group-item:first-child{
+  border-top: 0px;
 }
 
 .delete {
