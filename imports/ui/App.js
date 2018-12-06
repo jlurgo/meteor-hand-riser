@@ -50,7 +50,7 @@ class App extends Component {
               <input
                 type = "submit"
                 ref = "rise_hand_btn"
-                value = "rise your hand"
+                value = "raise your hand!"
               />
             </form> : ''
           }
